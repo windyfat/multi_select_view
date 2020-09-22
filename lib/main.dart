@@ -33,7 +33,11 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
 
+  /// 当前选择的列表数组
   List<String> _selects = [];
+
+  /// 总的数据源
+  /// _selects和_items的类型在实际使用中需要跟MultiSelectResult中members类型保持一致
   List<String> _items = [];
 
   @override

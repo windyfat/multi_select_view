@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:multi_select_dialog/select_manager.dart';
 
 class MultiSelectView extends StatefulWidget {
+  /// 这只是个demo，所以类型是String。实际使用中需要替换为接口返回的数据model
+  /// 跟MultiSelectResult中'members'的类型保持一致
   final List<String> items;
 
   const MultiSelectView({Key key, this.items}) : super(key: key);
@@ -11,8 +13,12 @@ class MultiSelectView extends StatefulWidget {
 }
 
 class _MultiSelectViewState extends State<MultiSelectView> {
+  /// 因为要根据输入内容进行搜索，所以创建一个新的_items来保存数据源
+  /// 跟widget.items类型保持一致
   List<String> _items;
   List<String> _selectMembers = new List();
+
+  /// column的children
   List<Widget> _cells = new List();
 
   @override
@@ -70,6 +76,7 @@ class _MultiSelectViewState extends State<MultiSelectView> {
             ),
           ),
           Expanded(
+            /// 这里SingleChildScrollView也可以用ListView来实现
             child: SingleChildScrollView(
               child: Column(
                 children: _cells.toList(),
@@ -92,18 +99,19 @@ class MultiSelectCell extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: 40,
-      // width: double.infinity,
       child: Row(
         mainAxisSize: MainAxisSize.max,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Container(
-            // width: 50,
             child: Text(
               value,
             ),
           ),
           Container(
+            /// 设置child中的widget不响应事件
+            /// AbsorbPointer也可以替换为IgnorePointer，效果也是一样的
+            /// 这两个是有区别的，虽然都可以设置child不响应事件，但是AbsorbPointer本身是可以响应的，而IgnorePointer本身也无法响应事件
             child: AbsorbPointer(
               child: Checkbox(
                 onChanged: (selected) {
